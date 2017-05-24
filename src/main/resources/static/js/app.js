@@ -27,6 +27,7 @@
         $rootScope.currentUser = $cookies.get('currentUser');
 
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
+            $rootScope.currentUser = $cookies.get('currentUser');
             // redirect to login page if not logged in and trying to access a restricted page
             var restrictedPage = $.inArray($location.path(), ['/login']) === -1;
             var loggedIn = $rootScope.currentUser;

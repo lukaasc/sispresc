@@ -24,12 +24,12 @@ public class LoginService {
             UserDTO authorized = new UserDTO();
 
             authorized.setUsername(user.getUsername());
-            authorized.setPassword(user.getPassword());
+            authorized.setRole(user.getRole());
+            authorized.setName(user.getName());
+            authorized.setLastname(user.getLastname());
 
             if (user.getPassword().equals(requester.getPassword())) {
                 authorized.setAuthorized(true);
-            } else {
-                authorized.setAuthorized(false);
             }
             return authorized;
         } catch (NullPointerException e) {

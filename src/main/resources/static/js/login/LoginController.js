@@ -19,18 +19,19 @@
                 url: '/api/login/authenticate',
                 data: {'username': vm.username, 'password': vm.password}
             }).then(function successCallback(response) {
-                    console.log(response.data.authorized);
                     var loggedUser = {
                         username: response.data.username,
                         password: response.data.password,
-                        authorized: true
+                        authorized: response.data.authorized,
+                        role: response.data.role,
+                        name: response.data.name,
+                        lastname: response.data.lastname
                     }
                     var expireDate = new Date();
                     expireDate.setDate(expireDate.getDate() + 1);
                     $cookies.put('currentUser', loggedUser, {
                         'expires': expireDate
                     });
-                    $rootScope.currentUser = $cookies.get('currentUser');
                     $location.path('/');
             }, function errorCallback(response) {
                 swal("Oops...", "User not authorized!", "error");
