@@ -12,7 +12,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -35,6 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Paciente.findAll", query = "SELECT p FROM Paciente p")
     , @NamedQuery(name = "Paciente.findByNome", query = "SELECT p FROM Paciente p WHERE p.nome = :nome")
+    , @NamedQuery(name = "Paciente.findBySobrenome", query = "SELECT p FROM Paciente p WHERE p.sobrenome = :sobrenome")
     , @NamedQuery(name = "Paciente.findByDataNasc", query = "SELECT p FROM Paciente p WHERE p.dataNasc = :dataNasc")
     , @NamedQuery(name = "Paciente.findByCpf", query = "SELECT p FROM Paciente p WHERE p.cpf = :cpf")})
 public class Paciente implements Serializable {
@@ -43,6 +43,9 @@ public class Paciente implements Serializable {
     @Size(max = 40)
     @Column(name = "NOME")
     private String nome;
+    @Size(max = 40)
+    @Column(name = "SOBRENOME")
+    private String sobrenome;
     @Column(name = "DATA_NASC")
     @Temporal(TemporalType.DATE)
     private Date dataNasc;
@@ -52,9 +55,9 @@ public class Paciente implements Serializable {
     @Size(min = 1, max = 15)
     @Column(name = "CPF")
     private String cpf;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "paciente", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "paciente")
     private List<Internacao> internacaoList;
-    @OneToMany(mappedBy = "cpf", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "cpf")
     private List<Prescricao> prescricaoList;
 
     public Paciente() {
@@ -70,6 +73,14 @@ public class Paciente implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getSobrenome() {
+        return sobrenome;
+    }
+
+    public void setSobrenome(String sobrenome) {
+        this.sobrenome = sobrenome;
     }
 
     public Date getDataNasc() {

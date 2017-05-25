@@ -10,7 +10,6 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -56,9 +55,9 @@ public class User implements Serializable {
     @Size(max = 40)
     @Column(name = "LASTNAME")
     private String lastname;
-    @OneToMany(mappedBy = "medResponsavel", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "medResponsavel")
     private List<Internacao> internacaoList;
-    @OneToMany(mappedBy = "medResponsavel", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "medResponsavel")
     private List<Prescricao> prescricaoList;
 
     public User() {

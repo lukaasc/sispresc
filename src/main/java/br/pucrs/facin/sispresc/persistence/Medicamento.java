@@ -10,7 +10,6 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -48,7 +47,7 @@ public class Medicamento implements Serializable {
     @JoinTable(name = "MEDICAMENTO_PRESCRICAO", joinColumns = {
         @JoinColumn(name = "ID_MEDICAMENTO", referencedColumnName = "ID")}, inverseJoinColumns = {
         @JoinColumn(name = "ID_PRESCRICAO", referencedColumnName = "ID")})
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     private List<Prescricao> prescricaoList;
 
     public Medicamento() {

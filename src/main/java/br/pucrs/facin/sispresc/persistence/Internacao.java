@@ -10,7 +10,6 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -44,10 +43,10 @@ public class Internacao implements Serializable {
     @Column(name = "SETOR")
     private Integer setor;
     @JoinColumn(name = "CPF", referencedColumnName = "CPF", insertable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Paciente paciente;
     @JoinColumn(name = "MED_RESPONSAVEL", referencedColumnName = "USERNAME")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private User medResponsavel;
 
     public Internacao() {

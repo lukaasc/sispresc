@@ -10,7 +10,6 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
@@ -19,7 +18,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -32,9 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Prescricao.findAll", query = "SELECT p FROM Prescricao p")
-    , @NamedQuery(name = "Prescricao.findById", query = "SELECT p FROM Prescricao p WHERE p.id = :id")
-    , @NamedQuery(name = "Prescricao.findByUsername", query = "SELECT p FROM Prescricao p WHERE p.username = :username")
-    , @NamedQuery(name = "Prescricao.findByIdMedicamento", query = "SELECT p FROM Prescricao p WHERE p.idMedicamento = :idMedicamento")})
+    , @NamedQuery(name = "Prescricao.findById", query = "SELECT p FROM Prescricao p WHERE p.id = :id")})
 public class Prescricao implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,18 +39,13 @@ public class Prescricao implements Serializable {
     @NotNull
     @Column(name = "ID")
     private Integer id;
-    @Size(max = 40)
-    @Column(name = "USERNAME")
-    private String username;
-    @Column(name = "ID_MEDICAMENTO")
-    private Integer idMedicamento;
-    @ManyToMany(mappedBy = "prescricaoList", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "prescricaoList")
     private List<Medicamento> medicamentoList;
     @JoinColumn(name = "CPF", referencedColumnName = "CPF")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Paciente cpf;
     @JoinColumn(name = "MED_RESPONSAVEL", referencedColumnName = "USERNAME")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private User medResponsavel;
 
     public Prescricao() {
@@ -70,22 +61,6 @@ public class Prescricao implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public Integer getIdMedicamento() {
-        return idMedicamento;
-    }
-
-    public void setIdMedicamento(Integer idMedicamento) {
-        this.idMedicamento = idMedicamento;
     }
 
     @XmlTransient
