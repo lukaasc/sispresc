@@ -1,54 +1,89 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package br.pucrs.facin.sispresc.persistence;
 
-import javax.persistence.Embeddable;
+import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
- * Created by lucas on 25/05/2017.
+ *
+ * @author lcaltab
  */
 @Embeddable
-public class InternacaoPK {
+public class InternacaoPK implements Serializable {
 
-    protected String CPF;
-    protected Date data_intern;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 15)
+    @Column(name = "CPF")
+    private String cpf;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "DATA_INTERN")
+    @Temporal(TemporalType.DATE)
+    private Date dataIntern;
 
-    public InternacaoPK(String CPF, Date data_intern) {
-        this.CPF = CPF;
-        this.data_intern = data_intern;
+    public InternacaoPK() {
     }
 
-    public String getCPF() {
-        return CPF;
+    public InternacaoPK(String cpf, Date dataIntern) {
+        this.cpf = cpf;
+        this.dataIntern = dataIntern;
     }
 
-    public void setCPF(String CPF) {
-        this.CPF = CPF;
+    public String getCpf() {
+        return cpf;
     }
 
-    public Date getData_intern() {
-        return data_intern;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
-    public void setData_intern(Date data_intern) {
-        this.data_intern = data_intern;
+    public Date getDataIntern() {
+        return dataIntern;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        InternacaoPK that = (InternacaoPK) o;
-
-        if (CPF != null ? !CPF.equals(that.CPF) : that.CPF != null) return false;
-        return data_intern != null ? data_intern.equals(that.data_intern) : that.data_intern == null;
-
+    public void setDataIntern(Date dataIntern) {
+        this.dataIntern = dataIntern;
     }
 
     @Override
     public int hashCode() {
-        int result = CPF != null ? CPF.hashCode() : 0;
-        result = 31 * result + (data_intern != null ? data_intern.hashCode() : 0);
-        return result;
+        int hash = 0;
+        hash += (cpf != null ? cpf.hashCode() : 0);
+        hash += (dataIntern != null ? dataIntern.hashCode() : 0);
+        return hash;
     }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof InternacaoPK)) {
+            return false;
+        }
+        InternacaoPK other = (InternacaoPK) object;
+        if ((this.cpf == null && other.cpf != null) || (this.cpf != null && !this.cpf.equals(other.cpf))) {
+            return false;
+        }
+        if ((this.dataIntern == null && other.dataIntern != null) || (this.dataIntern != null && !this.dataIntern.equals(other.dataIntern))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "br.pucrs.facin.sispresc.persistence.InternacaoPK[ cpf=" + cpf + ", dataIntern=" + dataIntern + " ]";
+    }
+    
 }
