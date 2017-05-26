@@ -6,31 +6,39 @@
 package br.pucrs.facin.sispresc.persistence;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author lcaltab
+ * @author lucas
  */
 @Entity
 @Table(name = "PRESCRICAO")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Prescricao.findAll", query = "SELECT p FROM Prescricao p")
-    , @NamedQuery(name = "Prescricao.findById", query = "SELECT p FROM Prescricao p WHERE p.id = :id")})
+    , @NamedQuery(name = "Prescricao.findById", query = "SELECT p FROM Prescricao p WHERE p.id = :id")
+    , @NamedQuery(name = "Prescricao.findBySituacao", query = "SELECT p FROM Prescricao p WHERE p.situacao = :situacao")
+    , @NamedQuery(name = "Prescricao.findByDataCriacao", query = "SELECT p FROM Prescricao p WHERE p.dataCriacao = :dataCriacao")})
 public class Prescricao implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,13 +47,18 @@ public class Prescricao implements Serializable {
     @NotNull
     @Column(name = "ID")
     private Integer id;
-    @ManyToMany(mappedBy = "prescricaoList")
+    @Size(max = 40)
+    @Column(name = "SITUACAO")
+    private String situacao;
+    @Column(name = "DATA_CRIACAO")
+    @Temporal(TemporalType.DATE)
+    private Date dataCriacao;
+    @ManyToMany(mappedBy = "prescricaoList", fetch = FetchType.LAZY)
     private List<Medicamento> medicamentoList;
-    @JoinColumn(name = "CPF", referencedColumnName = "CPF")
-    @ManyToOne
-    private Paciente cpf;
+    @OneToOne(mappedBy = "idPrescricao", fetch = FetchType.LAZY)
+    private Internacao internacao;
     @JoinColumn(name = "MED_RESPONSAVEL", referencedColumnName = "USERNAME")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User medResponsavel;
 
     public Prescricao() {
@@ -63,6 +76,22 @@ public class Prescricao implements Serializable {
         this.id = id;
     }
 
+    public String getSituacao() {
+        return situacao;
+    }
+
+    public void setSituacao(String situacao) {
+        this.situacao = situacao;
+    }
+
+    public Date getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacao(Date dataCriacao) {
+        this.dataCriacao = dataCriacao;
+    }
+
     @XmlTransient
     public List<Medicamento> getMedicamentoList() {
         return medicamentoList;
@@ -72,12 +101,12 @@ public class Prescricao implements Serializable {
         this.medicamentoList = medicamentoList;
     }
 
-    public Paciente getCpf() {
-        return cpf;
+    public Internacao getInternacao() {
+        return internacao;
     }
 
-    public void setCpf(Paciente cpf) {
-        this.cpf = cpf;
+    public void setInternacao(Internacao internacao) {
+        this.internacao = internacao;
     }
 
     public User getMedResponsavel() {

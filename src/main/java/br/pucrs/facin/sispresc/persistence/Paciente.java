@@ -9,9 +9,9 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author lcaltab
+ * @author lucas
  */
 @Entity
 @Table(name = "PACIENTE")
@@ -36,6 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Paciente.findByNome", query = "SELECT p FROM Paciente p WHERE p.nome = :nome")
     , @NamedQuery(name = "Paciente.findBySobrenome", query = "SELECT p FROM Paciente p WHERE p.sobrenome = :sobrenome")
     , @NamedQuery(name = "Paciente.findByDataNasc", query = "SELECT p FROM Paciente p WHERE p.dataNasc = :dataNasc")
+    , @NamedQuery(name = "Paciente.findBySexo", query = "SELECT p FROM Paciente p WHERE p.sexo = :sexo")
     , @NamedQuery(name = "Paciente.findByCpf", query = "SELECT p FROM Paciente p WHERE p.cpf = :cpf")})
 public class Paciente implements Serializable {
 
@@ -49,16 +50,17 @@ public class Paciente implements Serializable {
     @Column(name = "DATA_NASC")
     @Temporal(TemporalType.DATE)
     private Date dataNasc;
+    @Size(max = 10)
+    @Column(name = "SEXO")
+    private String sexo;
     @Id
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 15)
     @Column(name = "CPF")
     private String cpf;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "paciente")
+    @OneToMany(mappedBy = "cpf", fetch = FetchType.LAZY)
     private List<Internacao> internacaoList;
-    @OneToMany(mappedBy = "cpf")
-    private List<Prescricao> prescricaoList;
 
     public Paciente() {
     }
@@ -91,6 +93,14 @@ public class Paciente implements Serializable {
         this.dataNasc = dataNasc;
     }
 
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
     public String getCpf() {
         return cpf;
     }
@@ -106,15 +116,6 @@ public class Paciente implements Serializable {
 
     public void setInternacaoList(List<Internacao> internacaoList) {
         this.internacaoList = internacaoList;
-    }
-
-    @XmlTransient
-    public List<Prescricao> getPrescricaoList() {
-        return prescricaoList;
-    }
-
-    public void setPrescricaoList(List<Prescricao> prescricaoList) {
-        this.prescricaoList = prescricaoList;
     }
 
     @Override
