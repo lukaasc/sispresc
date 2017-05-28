@@ -36,3 +36,11 @@ body{
     text-align: center;
     padding-bottom: 20px;
 }
+
+.medicamentos{
+    margin-top: 20px;
+}
+
+.selected-medicamento{
+    margin-top: 20px;    
+}

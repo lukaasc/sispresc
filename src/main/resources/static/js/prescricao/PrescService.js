@@ -12,11 +12,19 @@
         var vm = this;
 
         vm.buscarInfoInternacao = _buscarInfoInternacao;
+        vm.buscarListaMedicamentos = _buscarListaMedicamentos;
 
         function _buscarInfoInternacao(cpf) {
             return $http({
                 method: 'GET',
                 url: '/api/internacao/' + cpf
+            });
+        }
+
+        function _buscarListaMedicamentos() {
+            return $http({
+                method: 'GET',
+                url: '/api/medicamento'
             });
         }
 

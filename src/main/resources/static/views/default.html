@@ -4,7 +4,7 @@
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            <a class="navbar-brand" href="default.html">SPM - Prescrição</a>
+            <a class="navbar-brand">SPM - Prescrição</a>
         </div>
         <!-- Top Menu Items -->
         <ul class="nav navbar-right top-nav">
@@ -60,6 +60,34 @@
                                 </span>
                             </div>                            
                         </form>
+
+                        <section class="medicamentos" data-ng-show="vm.infoInternacao">
+                            <hr>
+                            <label>Selecionar Medicamentos</label>
+                            <select class="selectpicker" multiple data-ng-model="vm.selectedMedicamento" data-ng-options="item.nome for item in vm.medicamentosList| orderBy: 'nome'" data-live-search="true">
+
+                            </select>
+                            <script>
+                                                $('.selectpicker').selectpicker({
+                                                    style: null,
+                                                    size: 'auto',
+                                                    title: 'Escolher medicamento',
+                                                    width: '100%'
+                                                });
+
+                            </script>
+                            <hr>
+                            <div class="list-group selected-medicamento">
+                                <label>Medicamentos Selecionados</label>
+                                <a class="list-group-item" data-ng-repeat="item in vm.selectedMedicamento">{{item.nome}}</a>
+                            </div>
+                            <hr>
+                            <div class="form-group">
+                                <label for="obs">Observações:</label>
+                                <textarea class="form-control" rows="9" id="obs"></textarea>
+                            </div>
+
+                        </section>
                     </div>
                 </div>
             </div>
@@ -72,15 +100,15 @@
                     <div class="panel-body" >
                         <div class="list-group">
                             <label>Paciente</label>
-                            <a href="#" class="list-group-item">
+                            <a class="list-group-item">
                                 <i class="fa fa-fw fa-user-o"></i> 
-                                <small>{{vm.infoInternacao.nome + ' ' +vm.infoInternacao.sobrenome}}</small>
+                                <small>{{vm.infoInternacao.nome + ' ' + vm.infoInternacao.sobrenome}}</small>
                             </a>
-                            <a href="#" class="list-group-item">
+                            <a class="list-group-item">
                                 <i class="fa fa-fw fa-birthday-cake"></i>
                                 <small>{{vm.infoInternacao.data_nasc}}</small>
                             </a>
-                            <a href="#" class="list-group-item">
+                            <a class="list-group-item">
                                 <i class="fa fa-fw fa-venus-mars"></i>
                                 <small>{{vm.infoInternacao.sexo}}</small>
                             </a>
@@ -88,19 +116,19 @@
 
                         <div class="list-group">
                             <label>Internação</label>
-                            <a href="#" class="list-group-item">
+                            <a class="list-group-item">
                                 <small>Data da Internação: {{vm.infoInternacao.data_intern}}</small>
                             </a>
-                            <a href="#" class="list-group-item">
+                            <a class="list-group-item">
                                 <small>Setor: {{vm.infoInternacao.setor}}</small>
                             </a>
-                            <a href="#" class="list-group-item">
+                            <a class="list-group-item">
                                 <small>Leito: {{vm.infoInternacao.leito}}</small>
                             </a>
-                            <a href="#" class="list-group-item">
+                            <a class="list-group-item">
                                 <small>Posto: {{vm.infoInternacao.posto}}</small>
                             </a>
-                            <a href="#" class="list-group-item">
+                            <a class="list-group-item">
                                 <small>Status: {{vm.infoInternacao.status}}</small>
                             </a>
                         </div>
