@@ -17,89 +17,89 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 show tables;
 
-CREATE TABLE USER(
-  USERNAME VARCHAR(40) PRIMARY KEY,
-  PASSWORD  VARCHAR(10),
-  ROLE VARCHAR(40),
-  NAME VARCHAR(40),
-  LASTNAME VARCHAR(40)
+create table user(
+  username varchar(40) primary key,
+  password  varchar(10),
+  role varchar(40),
+  name varchar(40),
+  lastname varchar(40)
 );
-CREATE TABLE PACIENTE(
-  NOME VARCHAR(40),
-  SOBRENOME VARCHAR(40),
-  DATA_NASC DATE,
-  SEXO VARCHAR(10),
-  CPF VARCHAR(15) PRIMARY KEY
+create table paciente(
+  nome varchar(40),
+  sobrenome varchar(40),
+  data_nasc date,
+  sexo varchar(10),
+  cpf varchar(15) primary key
 );
-CREATE TABLE MEDICAMENTO(
-  ID INT PRIMARY KEY,
-  NOME VARCHAR(400)
+create table medicamento(
+  id int primary key,
+  nome varchar(400)
   );
-CREATE TABLE PRESCRICAO(
-  ID INT PRIMARY KEY,
-  MED_RESPONSAVEL VARCHAR(40),
-  SITUACAO VARCHAR(40),
-  DATA_CRIACAO DATE,
-  FOREIGN KEY(MED_RESPONSAVEL) REFERENCES USER(USERNAME)  
+create table prescricao(
+  id int primary key,
+  med_responsavel varchar(40),
+  situacao varchar(40),
+  data_criacao date,
+  foreign key(med_responsavel) references user(username)  
 );
-CREATE TABLE INTERNACAO(
-  ID INT PRIMARY KEY,
-  ID_PRESCRICAO INT UNIQUE,
-  CPF VARCHAR(15),
-  DATA_INTERN DATE,
-  LEITO INT,
-  POSTO INT,
-  SETOR INT,
-  MED_RESPONSAVEL VARCHAR(40),
-  SITUACAO VARCHAR(40),
-  FOREIGN KEY(CPF) REFERENCES PACIENTE(CPF),
-  FOREIGN KEY(MED_RESPONSAVEL) REFERENCES USER(USERNAME),
-  FOREIGN KEY(ID_PRESCRICAO) REFERENCES PRESCRICAO(ID)
+create table internacao(
+  id int primary key,
+  id_prescricao int unique,
+  cpf varchar(15),
+  data_intern date,
+  leito int,
+  posto int,
+  setor int,
+  med_responsavel varchar(40),
+  situacao varchar(40),
+  foreign key(cpf) references paciente(cpf),
+  foreign key(med_responsavel) references user(username),
+  foreign key(id_prescricao) references prescricao(id)
 );
-CREATE TABLE MEDICAMENTO_PRESCRICAO(
-  ID_MEDICAMENTO INT,
-  ID_PRESCRICAO INT,
-  FOREIGN KEY (ID_MEDICAMENTO) REFERENCES MEDICAMENTO(ID),
-  FOREIGN KEY (ID_PRESCRICAO) REFERENCES PRESCRICAO(ID)
+create table medicamento_prescricao(
+  id_medicamento int,
+  id_prescricao int,
+  foreign key (id_medicamento) references medicamento(id),
+  foreign key (id_prescricao) references prescricao(id)
 );
 
-INSERT INTO  USER (USERNAME, PASSWORD, ROLE, NAME, LASTNAME) values ('mmachado', 'machado99', 'medico', 'Marcelo', 'Machado');
-INSERT INTO  USER (USERNAME, PASSWORD, ROLE, NAME, LASTNAME) values ('luisc', '334411', 'farmaceutico', 'Luis', 'Cardoso');
-INSERT INTO  USER (USERNAME, PASSWORD, ROLE, NAME, LASTNAME) values ('betas', 'asdf1234', 'medico', 'Roberta', 'Souza');
-INSERT INTO  USER (USERNAME, PASSWORD, ROLE, NAME, LASTNAME) values ('fernanda1', 'ferlopes', 'farmaceutico', 'Fernanda', 'Lopes');
+insert into  user (username, password, role, name, lastname) values ('mmachado', 'machado99', 'medico', 'Marcelo', 'Machado');
+insert into  user (username, password, role, name, lastname) values ('luisc', '334411', 'farmaceutico', 'Luis', 'Cardoso');
+insert into  user (username, password, role, name, lastname) values ('betas', 'asdf1234', 'medico', 'Roberta', 'Souza');
+insert into  user (username, password, role, name, lastname) values ('fernanda1', 'ferlopes', 'farmaceutico', 'Fernanda', 'Lopes');
 
-INSERT INTO PACIENTE (NOME, SOBRENOME, DATA_NASC, SEXO, CPF) values ('Juliano', 'Fraga', STR_TO_DATE('05/05/1989', '%d/%m/%Y'), 'M', '4561238094583');
-INSERT INTO PACIENTE (NOME, SOBRENOME, DATA_NASC, SEXO, CPF) values ('Julia', 'Martins', STR_TO_DATE('30/03/1994', '%d/%m/%Y'), 'F','5468741365987');
-INSERT INTO PACIENTE (NOME, SOBRENOME, DATA_NASC, SEXO, CPF) values ('Ricardo', 'Fonseca', STR_TO_DATE('14/07/1962', '%d/%m/%Y'), 'M', '3698741259654');
-INSERT INTO PACIENTE (NOME, SOBRENOME, DATA_NASC, SEXO, CPF) values ('Patricia', 'Silva', STR_TO_DATE('09/12/2000', '%d/%m/%Y'), 'F', '3698547895412');
+insert into paciente (nome, sobrenome, data_nasc, sexo, cpf) values ('Juliano', 'Fraga', STR_TO_DATE('05/05/1989', '%d/%m/%Y'), 'M', '4561238094583');
+insert into paciente (nome, sobrenome, data_nasc, sexo, cpf) values ('Julia', 'Martins', STR_TO_DATE('30/03/1994', '%d/%m/%Y'), 'F','5468741365987');
+insert into paciente (nome, sobrenome, data_nasc, sexo, cpf) values ('Ricardo', 'Fonseca', STR_TO_DATE('14/07/1962', '%d/%m/%Y'), 'M', '3698741259654');
+insert into paciente (nome, sobrenome, data_nasc, sexo, cpf) values ('Patricia', 'Silva', STR_TO_DATE('09/12/2000', '%d/%m/%Y'), 'F', '3698547895412');
 
-INSERT INTO MEDICAMENTO(ID, NOME) values (44567, 'ASPIRINA 500 MG COM CT 10 ENV X 2');
-INSERT INTO MEDICAMENTO(ID, NOME) values (38345, 'IQUEGO - PARACETAMOL 500 MG COM CX ENV KRAFT POLIET X 500 (EMB. HOSP');
-INSERT INTO MEDICAMENTO(ID, NOME) values (28644, 'TORAGESIC 10 MG COM SUB- LING CT FR VD AMB X 10&nbsp;01');
-INSERT INTO MEDICAMENTO(ID, NOME) values (96494, 'ISOFARMA - SOLUÇÃO DE SULFATO DE MAGNESIO 100 MG/ML SOL INJ CX 100 AMP PLAS TRANS PE X 10 ML');
+insert into medicamento(id, nome) values (44567, 'ASPIRINA 500 MG COM CT 10 ENV X 2');
+insert into medicamento(id, nome) values (38345, 'IQUEGO - PARACETAMOL 500 MG COM CX ENV KRAFT POLIET X 500 (EMB. HOSP');
+insert into medicamento(id, nome) values (28644, 'TORAGESIC 10 MG COM SUB- LING CT FR VD AMB X 10&nbsp;01');
+insert into medicamento(id, nome) values (96494, 'ISOFARMA - SOLUÇÃO DE SULFATO DE MAGNESIO 100 MG/ML SOL INJ CX 100 AMP PLAS TRANS PE X 10 ML');
 
-INSERT INTO PRESCRICAO(ID, SITUACAO, MED_RESPONSAVEL, DATA_CRIACAO) values (58654, 'Ativo', 'mmachado', STR_TO_DATE('15/03/2017', '%d/%m/%Y'));
-INSERT INTO PRESCRICAO(ID, SITUACAO, MED_RESPONSAVEL, DATA_CRIACAO) values (86456, 'Ativo', 'mmachado', STR_TO_DATE('09/05/2017', '%d/%m/%Y'));
-INSERT INTO PRESCRICAO(ID, SITUACAO, MED_RESPONSAVEL, DATA_CRIACAO) values (47854, 'Ativo', 'betas', STR_TO_DATE('01/04/2017', '%d/%m/%Y'));
-INSERT INTO PRESCRICAO(ID, SITUACAO, MED_RESPONSAVEL, DATA_CRIACAO) values (69845, 'Ativo', 'betas', STR_TO_DATE('10/12/2016', '%d/%m/%Y'));
+insert into prescricao(id, situacao, med_responsavel, data_criacao) values (58654, 'Ativo', 'mmachado', STR_TO_DATE('15/03/2017', '%d/%m/%Y'));
+insert into prescricao(id, situacao, med_responsavel, data_criacao) values (86456, 'Ativo', 'mmachado', STR_TO_DATE('09/05/2017', '%d/%m/%Y'));
+insert into prescricao(id, situacao, med_responsavel, data_criacao) values (47854, 'Ativo', 'betas', STR_TO_DATE('01/04/2017', '%d/%m/%Y'));
+insert into prescricao(id, situacao, med_responsavel, data_criacao) values (69845, 'Ativo', 'betas', STR_TO_DATE('10/12/2016', '%d/%m/%Y'));
 
-INSERT INTO MEDICAMENTO_PRESCRICAO(ID_MEDICAMENTO, ID_PRESCRICAO) values (44567, 58654);
-INSERT INTO MEDICAMENTO_PRESCRICAO(ID_MEDICAMENTO, ID_PRESCRICAO) values (38345, 58654);
-INSERT INTO MEDICAMENTO_PRESCRICAO(ID_MEDICAMENTO, ID_PRESCRICAO) values (96494, 86456);
-INSERT INTO MEDICAMENTO_PRESCRICAO(ID_MEDICAMENTO, ID_PRESCRICAO) values (28644, 47854);
-INSERT INTO MEDICAMENTO_PRESCRICAO(ID_MEDICAMENTO, ID_PRESCRICAO) values (38345, 69845);
-
-
-INSERT INTO INTERNACAO (ID, ID_PRESCRICAO, CPF, DATA_INTERN, LEITO, POSTO, SETOR, MED_RESPONSAVEL, SITUACAO) values (1, 58654, '4561238094583', STR_TO_DATE('15/03/2017', '%d/%m/%Y'), 11, 14, 3, 'betas', 'Aberta');
-INSERT INTO INTERNACAO (ID, ID_PRESCRICAO, CPF, DATA_INTERN, LEITO, POSTO, SETOR, MED_RESPONSAVEL, SITUACAO) values (2, 86456, '5468741365987', STR_TO_DATE('09/05/2017', '%d/%m/%Y'), 3, 14, 1, 'mmachado', 'Aberta');
-INSERT INTO INTERNACAO (ID, ID_PRESCRICAO, CPF, DATA_INTERN, LEITO, POSTO, SETOR, MED_RESPONSAVEL, SITUACAO) values (3, 47854, '3698741259654', STR_TO_DATE('01/04/2017', '%d/%m/%Y'), 7, 13, 2, 'betas', 'Fechada');
-INSERT INTO INTERNACAO (ID, ID_PRESCRICAO, CPF, DATA_INTERN, LEITO, POSTO, SETOR, MED_RESPONSAVEL, SITUACAO) values (4, 69845, '3698547895412', STR_TO_DATE('10/12/2016', '%d/%m/%Y'), 6, 13, 1, 'mmachado', 'Aberta');
+insert into medicamento_prescricao(id_medicamento, id_prescricao) values (44567, 58654);
+insert into medicamento_prescricao(id_medicamento, id_prescricao) values (38345, 58654);
+insert into medicamento_prescricao(id_medicamento, id_prescricao) values (96494, 86456);
+insert into medicamento_prescricao(id_medicamento, id_prescricao) values (28644, 47854);
+insert into medicamento_prescricao(id_medicamento, id_prescricao) values (38345, 69845);
 
 
-SELECT CONCAT(U.NAME, ' ', U.LASTNAME) MEDICO, CONCAT(PAC.NOME, ' ', PAC.SOBRENOME) PACIENTE, INTER.SITUACAO SITINTERNACAO, PRESC.SITUACAO PRESCSITUACAO, M.NOME 
-FROM PRESCRICAO PRESC
-INNER JOIN USER U ON U.USERNAME = PRESC.MED_RESPONSAVEL
-INNER JOIN INTERNACAO INTER ON INTER.ID_PRESCRICAO = PRESC.ID
-INNER JOIN MEDICAMENTO_PRESCRICAO MP ON MP.ID_PRESCRICAO = PRESC.ID
-INNER JOIN MEDICAMENTO M ON M.ID = MP.ID_MEDICAMENTO
-INNER JOIN PACIENTE PAC ON PAC.CPF = INTER.CPF;
+insert into internacao (id, id_prescricao, cpf, data_intern, leito, posto, setor, med_responsavel, situacao) values (1, 58654, '4561238094583', STR_TO_DATE('15/03/2017', '%d/%m/%Y'), 11, 14, 3, 'betas', 'Aberta');
+insert into internacao (id, id_prescricao, cpf, data_intern, leito, posto, setor, med_responsavel, situacao) values (2, 86456, '5468741365987', STR_TO_DATE('09/05/2017', '%d/%m/%Y'), 3, 14, 1, 'mmachado', 'Aberta');
+insert into internacao (id, id_prescricao, cpf, data_intern, leito, posto, setor, med_responsavel, situacao) values (3, 47854, '3698741259654', STR_TO_DATE('01/04/2017', '%d/%m/%Y'), 7, 13, 2, 'betas', 'Fechada');
+insert into internacao (id, id_prescricao, cpf, data_intern, leito, posto, setor, med_responsavel, situacao) values (4, 69845, '3698547895412', STR_TO_DATE('10/12/2016', '%d/%m/%Y'), 6, 13, 1, 'mmachado', 'Aberta');
+
+
+select concat(u.name, ' ', u.lastname) medico, concat(pac.nome, ' ', pac.sobrenome) paciente, inter.situacao sitinternacao, presc.situacao prescsituacao, m.nome 
+from prescricao presc
+inner join user u on u.username = presc.med_responsavel
+inner join internacao inter on inter.id_prescricao = presc.id
+inner join medicamento_prescricao mp on mp.id_prescricao = presc.id
+inner join medicamento m on m.id = mp.id_medicamento
+inner join paciente pac on pac.cpf = inter.cpf;
