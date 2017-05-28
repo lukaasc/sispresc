@@ -40,6 +40,7 @@ create table prescricao(
   med_responsavel varchar(40),
   situacao varchar(40),
   data_criacao date,
+  observacao varchar(4000),
   foreign key(med_responsavel) references user(username)  
 );
 create table internacao(
@@ -78,10 +79,10 @@ insert into medicamento(id, nome) values (38345, 'IQUEGO - PARACETAMOL 500 MG CO
 insert into medicamento(id, nome) values (28644, 'TORAGESIC 10 MG COM SUB- LING CT FR VD AMB X 10&nbsp;01');
 insert into medicamento(id, nome) values (96494, 'ISOFARMA - SOLUÇÃO DE SULFATO DE MAGNESIO 100 MG/ML SOL INJ CX 100 AMP PLAS TRANS PE X 10 ML');
 
-insert into prescricao(id, situacao, med_responsavel, data_criacao) values (58654, 'Ativo', 'mmachado', STR_TO_DATE('15/03/2017', '%d/%m/%Y'));
-insert into prescricao(id, situacao, med_responsavel, data_criacao) values (86456, 'Ativo', 'mmachado', STR_TO_DATE('09/05/2017', '%d/%m/%Y'));
-insert into prescricao(id, situacao, med_responsavel, data_criacao) values (47854, 'Ativo', 'betas', STR_TO_DATE('01/04/2017', '%d/%m/%Y'));
-insert into prescricao(id, situacao, med_responsavel, data_criacao) values (69845, 'Ativo', 'betas', STR_TO_DATE('10/12/2016', '%d/%m/%Y'));
+insert into prescricao(id, situacao, med_responsavel, data_criacao, observacao) values (58654, 'Ativo', 'mmachado', STR_TO_DATE('15/03/2017', '%d/%m/%Y'), 'Tomar X vezes ao dia durante Y dias');
+insert into prescricao(id, situacao, med_responsavel, data_criacao, observacao) values (86456, 'Ativo', 'mmachado', STR_TO_DATE('09/05/2017', '%d/%m/%Y'), 'Tomar X vezes ao dia durante Y dias');
+insert into prescricao(id, situacao, med_responsavel, data_criacao, observacao) values (47854, 'Ativo', 'betas', STR_TO_DATE('01/04/2017', '%d/%m/%Y'), 'Tomar X vezes ao dia durante Y dias');
+insert into prescricao(id, situacao, med_responsavel, data_criacao, observacao) values (69845, 'Ativo', 'betas', STR_TO_DATE('10/12/2016', '%d/%m/%Y'), 'Tomar X vezes ao dia durante Y dias');
 
 insert into medicamento_prescricao(id_medicamento, id_prescricao) values (44567, 58654);
 insert into medicamento_prescricao(id_medicamento, id_prescricao) values (38345, 58654);
@@ -96,7 +97,7 @@ insert into internacao (id, id_prescricao, cpf, data_intern, leito, posto, setor
 insert into internacao (id, id_prescricao, cpf, data_intern, leito, posto, setor, med_responsavel, situacao) values (4, 69845, '3698547895412', STR_TO_DATE('10/12/2016', '%d/%m/%Y'), 6, 13, 1, 'mmachado', 'Aberta');
 
 
-select concat(u.name, ' ', u.lastname) medico, concat(pac.nome, ' ', pac.sobrenome) paciente, inter.situacao sitinternacao, presc.situacao prescsituacao, m.nome 
+select concat(u.name, ' ', u.lastname) medico, concat(pac.nome, ' ', pac.sobrenome) paciente, inter.situacao sitinternacao, presc.situacao prescsituacao, m.nome, presc.observacao 
 from prescricao presc
 inner join user u on u.username = presc.med_responsavel
 inner join internacao inter on inter.id_prescricao = presc.id
