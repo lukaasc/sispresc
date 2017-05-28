@@ -52,99 +52,64 @@
 
                     <div class="panel-body">
 
-                        <form class="form-inline">
-
-                            <label for="email">Paciente:</label>
-
+                        <form class="form-search" data-ng-submit="vm.buscarInfoInternacao()">
                             <div class="input-group">
-
-                                <input type="text" class="form-control" placeholder="Lombardi José">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-default" type="submit">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </div>
-                            </div>
-
-
-
-                            <div class="form-group pull-right">
-                                <label for="email">Documento:</label>
-                                <input type="email" class="form-control" id="email" placeholder="26.332.112-55">
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Nascimento:</label>
-                                <input type="email" class="form-control" id="email" placeholder="12-12-1980">
-                            </div>
-
-                            <div class="form-group pull-right">
-                                <label for="email">Idade:</label>
-                                <input type="email" class="form-control" id="email" placeholder="36">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="email">Internação:</label>
-                                <input type="email" class="form-control" id="email" placeholder="01-02-2017">
-                            </div>
-
-                            <div class="form-group pull-right">
-                                <label for="email">Leito:</label>
-                                <input type="email" class="form-control" id="email" placeholder="2">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="email">Setor:</label>
-                                <input type="email" class="form-control" id="email" placeholder="12345">
-                            </div>
-
-                            <div class="form-group pull-right">
-                                <label for="email">Posto:</label>
-                                <input type="email" class="form-control" id="email" placeholder="3">
-                            </div>
-
+                                <input type="text" class="form-control" placeholder="Buscar CPF" data-ng-model="vm.cpf" required>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-secondary" type="submit"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>                            
                         </form>
-                        <br>
-
-                        <button class="btn btn-primary pull-right">Submeter</button>
-
                     </div>
                 </div>
             </div>
 
-            <div class="col-lg-4 pull-right">
+            <div class="col-lg-4 pull-right" data-ng-if="vm.infoInternacao">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Últimas Prescrições</h3>
+                        <h3 class="panel-title"><i class="fa fa-info-circle fa-fw"></i> Informações</h3>
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body" >
                         <div class="list-group">
+                            <label>Paciente</label>
                             <a href="#" class="list-group-item">
-                                <span class="badge">13:00h</span>
-                                <i class="fa fa-fw fa-medkit"></i> 13221 - João Silva
+                                <i class="fa fa-fw fa-user-o"></i> 
+                                <small>{{vm.infoInternacao.nome + ' ' +vm.infoInternacao.sobrenome}}</small>
                             </a>
                             <a href="#" class="list-group-item">
-                                <span class="badge">12:00h</span>
-                                <i class="fa fa-fw fa-medkit"></i> 12554 - Matheus Moraes
+                                <i class="fa fa-fw fa-birthday-cake"></i>
+                                <small>{{vm.infoInternacao.data_nasc}}</small>
                             </a>
                             <a href="#" class="list-group-item">
-                                <span class="badge">11:32h</span>
-                                <i class="fa fa-fw fa-medkit"></i> 11323 - Maria Soares
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <span class="badge">11:01h</span>
-                                <i class="fa fa-fw fa-medkit"></i> 11232 - Manoel Guilherme
+                                <i class="fa fa-fw fa-venus-mars"></i>
+                                <small>{{vm.infoInternacao.sexo}}</small>
                             </a>
                         </div>
-                        <div class="text-right">
-                            <a href="#">Visualizar tudo <i class="fa fa-arrow-circle-right"></i></a>
+
+                        <div class="list-group">
+                            <label>Internação</label>
+                            <a href="#" class="list-group-item">
+                                <small>Data da Internação: {{vm.infoInternacao.data_intern}}</small>
+                            </a>
+                            <a href="#" class="list-group-item">
+                                <small>Setor: {{vm.infoInternacao.setor}}</small>
+                            </a>
+                            <a href="#" class="list-group-item">
+                                <small>Leito: {{vm.infoInternacao.leito}}</small>
+                            </a>
+                            <a href="#" class="list-group-item">
+                                <small>Posto: {{vm.infoInternacao.posto}}</small>
+                            </a>
+                            <a href="#" class="list-group-item">
+                                <small>Status: {{vm.infoInternacao.status}}</small>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- /.row -->
+
         </div>
-        <!-- /.row -->
+        <!-- /.container-fluid -->
 
     </div>
-    <!-- /.container-fluid -->
-
-</div>

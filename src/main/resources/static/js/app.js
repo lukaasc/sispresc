@@ -2,23 +2,25 @@
     'use strict';
 
     angular
-        .module('myApp', ['ngRoute', 'ngCookies'])
-        .config(config)
-        .run(run);
+            .module('myApp', ['ngRoute', 'ngCookies'])
+            .config(config)
+            .run(run);
 
     config.$inject = ['$routeProvider'];
 
     function config($routeProvider) {
         $routeProvider
-            .when('/', {
-                templateUrl: 'views/default.html',
-            })
-            .when('/login', {
-                templateUrl: 'views/login.html',
-                controller: 'LoginController',
-                controllerAs: 'vm'
-            })
-            .otherwise({redirectTo: '/'});
+                .when('/', {
+                    templateUrl: 'views/default.html',
+                    controller: 'PrescController',
+                    controllerAs: 'vm'
+                })
+                .when('/login', {
+                    templateUrl: 'views/login.html',
+                    controller: 'LoginController',
+                    controllerAs: 'vm'
+                })
+                .otherwise({redirectTo: '/'});
     }
 
     run.$inject = ['$rootScope', '$location', '$cookies', '$http'];

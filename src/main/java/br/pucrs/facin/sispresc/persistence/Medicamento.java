@@ -45,10 +45,10 @@ public class Medicamento implements Serializable {
     @Size(max = 40)
     @Column(name = "NOME")
     private String nome;
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "MEDICAMENTO_PRESCRICAO", joinColumns = {
         @JoinColumn(name = "ID_MEDICAMENTO", referencedColumnName = "ID")}, inverseJoinColumns = {
         @JoinColumn(name = "ID_PRESCRICAO", referencedColumnName = "ID")})
-    @ManyToMany(fetch = FetchType.LAZY)
     private List<Prescricao> prescricaoList;
 
     public Medicamento() {
