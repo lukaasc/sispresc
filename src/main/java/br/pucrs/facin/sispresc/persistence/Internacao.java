@@ -5,6 +5,7 @@
  */
 package br.pucrs.facin.sispresc.persistence;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -29,7 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author lucas
  */
 @Entity
-@Table(name = "INTERNACAO")
+@Table(name = "internacao")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Internacao.findAll", query = "SELECT i FROM Internacao i")
@@ -45,29 +46,31 @@ public class Internacao implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "ID")
+    @Column(name = "id")
     private Integer id;
-    @Column(name = "DATA_INTERN")
+    @Column(name = "data_intern")
     @Temporal(TemporalType.DATE)
     private Date dataIntern;
-    @Column(name = "LEITO")
+    @Column(name = "leito")
     private Integer leito;
-    @Column(name = "POSTO")
+    @Column(name = "posto")
     private Integer posto;
-    @Column(name = "SETOR")
+    @Column(name = "setor")
     private Integer setor;
     @Size(max = 40)
-    @Column(name = "SITUACAO")
+    @Column(name = "situacao")
     private String situacao;
-    @JoinColumn(name = "CPF", referencedColumnName = "CPF")
+    @JoinColumn(name = "cpf", referencedColumnName = "cpf")
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private Paciente cpf;
-    @JoinColumn(name = "ID_PRESCRICAO", referencedColumnName = "ID")
+    @JoinColumn(name = "med_responsavel", referencedColumnName = "username")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private User medResponsavel;
+    @JoinColumn(name = "id_prescricao", referencedColumnName = "id")
     @OneToOne(fetch = FetchType.LAZY)
     private Prescricao idPrescricao;
-    @JoinColumn(name = "MED_RESPONSAVEL", referencedColumnName = "USERNAME")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private User medResponsavel;
 
     public Internacao() {
     }
@@ -132,20 +135,20 @@ public class Internacao implements Serializable {
         this.cpf = cpf;
     }
 
-    public Prescricao getIdPrescricao() {
-        return idPrescricao;
-    }
-
-    public void setIdPrescricao(Prescricao idPrescricao) {
-        this.idPrescricao = idPrescricao;
-    }
-
     public User getMedResponsavel() {
         return medResponsavel;
     }
 
     public void setMedResponsavel(User medResponsavel) {
         this.medResponsavel = medResponsavel;
+    }
+
+    public Prescricao getIdPrescricao() {
+        return idPrescricao;
+    }
+
+    public void setIdPrescricao(Prescricao idPrescricao) {
+        this.idPrescricao = idPrescricao;
     }
 
     @Override

@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author lucas
  */
 @Entity
-@Table(name = "PACIENTE")
+@Table(name = "paciente")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Paciente.findAll", query = "SELECT p FROM Paciente p")
@@ -42,22 +42,22 @@ public class Paciente implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Size(max = 40)
-    @Column(name = "NOME")
+    @Column(name = "nome")
     private String nome;
     @Size(max = 40)
-    @Column(name = "SOBRENOME")
+    @Column(name = "sobrenome")
     private String sobrenome;
-    @Column(name = "DATA_NASC")
+    @Column(name = "data_nasc")
     @Temporal(TemporalType.DATE)
     private Date dataNasc;
     @Size(max = 10)
-    @Column(name = "SEXO")
+    @Column(name = "sexo")
     private String sexo;
     @Id
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 15)
-    @Column(name = "CPF")
+    @Column(name = "cpf")
     private String cpf;
     @OneToMany(mappedBy = "cpf", fetch = FetchType.LAZY)
     private List<Internacao> internacaoList;

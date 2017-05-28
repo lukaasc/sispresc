@@ -5,6 +5,7 @@
  */
 package br.pucrs.facin.sispresc.persistence;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -32,7 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author lucas
  */
 @Entity
-@Table(name = "PRESCRICAO")
+@Table(name = "prescricao")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Prescricao.findAll", query = "SELECT p FROM Prescricao p")
@@ -45,21 +46,23 @@ public class Prescricao implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "ID")
+    @Column(name = "id")
     private Integer id;
     @Size(max = 40)
-    @Column(name = "SITUACAO")
+    @Column(name = "situacao")
     private String situacao;
-    @Column(name = "DATA_CRIACAO")
+    @Column(name = "data_criacao")
     @Temporal(TemporalType.DATE)
     private Date dataCriacao;
     @ManyToMany(mappedBy = "prescricaoList", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Medicamento> medicamentoList;
+    @JoinColumn(name = "med_responsavel", referencedColumnName = "username")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private User medResponsavel;
     @OneToOne(mappedBy = "idPrescricao", fetch = FetchType.LAZY)
     private Internacao internacao;
-    @JoinColumn(name = "MED_RESPONSAVEL", referencedColumnName = "USERNAME")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private User medResponsavel;
 
     public Prescricao() {
     }
@@ -101,20 +104,20 @@ public class Prescricao implements Serializable {
         this.medicamentoList = medicamentoList;
     }
 
-    public Internacao getInternacao() {
-        return internacao;
-    }
-
-    public void setInternacao(Internacao internacao) {
-        this.internacao = internacao;
-    }
-
     public User getMedResponsavel() {
         return medResponsavel;
     }
 
     public void setMedResponsavel(User medResponsavel) {
         this.medResponsavel = medResponsavel;
+    }
+
+    public Internacao getInternacao() {
+        return internacao;
+    }
+
+    public void setInternacao(Internacao internacao) {
+        this.internacao = internacao;
     }
 
     @Override

@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author lucas
  */
 @Entity
-@Table(name = "USER")
+@Table(name = "user")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
@@ -42,24 +42,24 @@ public class User implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 40)
-    @Column(name = "USERNAME")
+    @Column(name = "username")
     private String username;
     @Size(max = 10)
-    @Column(name = "PASSWORD")
+    @Column(name = "password")
     private String password;
     @Size(max = 40)
-    @Column(name = "ROLE")
+    @Column(name = "role")
     private String role;
     @Size(max = 40)
-    @Column(name = "NAME")
+    @Column(name = "name")
     private String name;
     @Size(max = 40)
-    @Column(name = "LASTNAME")
+    @Column(name = "lastname")
     private String lastname;
     @OneToMany(mappedBy = "medResponsavel", fetch = FetchType.LAZY)
-    private List<Internacao> internacaoList;
-    @OneToMany(mappedBy = "medResponsavel", fetch = FetchType.LAZY)
     private List<Prescricao> prescricaoList;
+    @OneToMany(mappedBy = "medResponsavel", fetch = FetchType.LAZY)
+    private List<Internacao> internacaoList;
 
     public User() {
     }
@@ -109,21 +109,21 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    public List<Internacao> getInternacaoList() {
-        return internacaoList;
-    }
-
-    public void setInternacaoList(List<Internacao> internacaoList) {
-        this.internacaoList = internacaoList;
-    }
-
-    @XmlTransient
     public List<Prescricao> getPrescricaoList() {
         return prescricaoList;
     }
 
     public void setPrescricaoList(List<Prescricao> prescricaoList) {
         this.prescricaoList = prescricaoList;
+    }
+
+    @XmlTransient
+    public List<Internacao> getInternacaoList() {
+        return internacaoList;
+    }
+
+    public void setInternacaoList(List<Internacao> internacaoList) {
+        this.internacaoList = internacaoList;
     }
 
     @Override

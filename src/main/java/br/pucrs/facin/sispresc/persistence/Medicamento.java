@@ -5,6 +5,7 @@
  */
 package br.pucrs.facin.sispresc.persistence;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -28,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author lucas
  */
 @Entity
-@Table(name = "MEDICAMENTO")
+@Table(name = "medicamento")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Medicamento.findAll", query = "SELECT m FROM Medicamento m")
@@ -40,15 +41,16 @@ public class Medicamento implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "ID")
+    @Column(name = "id")
     private Integer id;
-    @Size(max = 40)
-    @Column(name = "NOME")
+    @Size(max = 400)
+    @Column(name = "nome")
     private String nome;
+    @JoinTable(name = "medicamento_prescricao", joinColumns = {
+        @JoinColumn(name = "id_medicamento", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "id_prescricao", referencedColumnName = "id")})
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "MEDICAMENTO_PRESCRICAO", joinColumns = {
-        @JoinColumn(name = "ID_MEDICAMENTO", referencedColumnName = "ID")}, inverseJoinColumns = {
-        @JoinColumn(name = "ID_PRESCRICAO", referencedColumnName = "ID")})
+    @JsonIgnore
     private List<Prescricao> prescricaoList;
 
     public Medicamento() {
