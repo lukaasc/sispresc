@@ -28,7 +28,6 @@ public class InternacaoService {
             if ("".equals(paciente.getCpf()) || paciente.getInternacaoList().isEmpty()) {
                 throw new RuntimeException("Paciente sem internações em aberto!");
             }
-
             InternacaoDTO internacaoDTO = new InternacaoDTO();
 
             internacaoDTO.setCpf(paciente.getCpf());
@@ -38,7 +37,7 @@ public class InternacaoService {
             internacaoDTO.setSexo(paciente.getSexo());
 
             paciente.getInternacaoList().forEach(internacao -> {
-                if ("aberto".equalsIgnoreCase(internacao.getSituacao())) {
+                if ("aberta".equalsIgnoreCase(internacao.getSituacao())) {
                     internacaoDTO.setData_intern(internacao.getDataIntern());
                     internacaoDTO.setLeito(internacao.getLeito());
                     internacaoDTO.setPosto(internacao.getPosto());

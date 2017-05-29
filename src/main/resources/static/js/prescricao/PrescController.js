@@ -13,14 +13,13 @@
         vm.buscarInfoInternacao = _buscarInfoInternacao;
         vm.criarPrescricao = _criarPrescricao;
         vm.PrescService = PrescService;
-        vm.cpf = '';
         vm.infoInternacao = null;
         vm.medicamentosList = [];
-        vm.selectedMedicamento = [];
+        vm.prescricao = {};
 
         function _buscarInfoInternacao() {
 
-            vm.PrescService.buscarInfoInternacao(vm.cpf).then(function successCallback(response) {
+            vm.PrescService.buscarInfoInternacao(vm.prescricao.cpf).then(function successCallback(response) {
                 vm.infoInternacao = response.data;
                 _buscarListaMedicamentos();
             }, function errorCallback(response) {
@@ -44,10 +43,11 @@
         }
 
         function _criarPrescricao() {
-
-            vm.PrescService.criarPrescricao().then(function successCallback(response) {
-
-
+            vm.PrescService.criarPrescricao(vm.prescricao).then(function successCallback(response) {
+                swal("Good job!", "Prescrição criada!", "success")
+                vm.prescricao = {};
+                vm.infoInternacao = null;
+                vm.medicamentosList = [];
             }, function errorCallback(response) {
                 swal("Oops...", "Não foi possível criar prescrição!", "error");
             });

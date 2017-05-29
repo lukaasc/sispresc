@@ -13,6 +13,7 @@
 
         vm.buscarInfoInternacao = _buscarInfoInternacao;
         vm.buscarListaMedicamentos = _buscarListaMedicamentos;
+        vm.criarPrescricao = _criarPrescricao;
 
         function _buscarInfoInternacao(cpf) {
             return $http({
@@ -25,6 +26,14 @@
             return $http({
                 method: 'GET',
                 url: '/api/medicamento'
+            });
+        }
+
+        function _criarPrescricao(presc) {
+            return $http({
+                method: 'POST',
+                url: '/api/prescricao/criar',
+                data: presc
             });
         }
 

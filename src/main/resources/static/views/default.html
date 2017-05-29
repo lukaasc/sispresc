@@ -54,7 +54,7 @@
 
                         <form class="form-search" data-ng-submit="vm.buscarInfoInternacao()">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Buscar CPF" data-ng-model="vm.cpf" required>
+                                <input type="text" class="form-control" placeholder="Buscar CPF" data-ng-model="vm.prescricao.cpf" required>
                                 <span class="input-group-btn">
                                     <button class="btn btn-secondary" type="submit"><i class="fa fa-search"></i></button>
                                 </span>
@@ -64,7 +64,7 @@
                         <section class="medicamentos" data-ng-show="vm.infoInternacao">
                             <hr>
                             <label>Selecionar Medicamentos</label>
-                            <select class="selectpicker" multiple data-ng-model="vm.selectedMedicamento" data-ng-options="item.nome for item in vm.medicamentosList| orderBy: 'nome'" data-live-search="true">
+                            <select class="selectpicker" multiple data-ng-model="vm.prescricao.selectedMedicamento" data-ng-options="item.nome for item in vm.medicamentosList| orderBy: 'nome'" data-live-search="true">
 
                             </select>
                             <script>
@@ -79,14 +79,15 @@
                             <hr>
                             <div class="list-group selected-medicamento">
                                 <label>Medicamentos Selecionados</label>
-                                <a class="list-group-item" data-ng-repeat="item in vm.selectedMedicamento">{{item.nome}}</a>
+                                <a class="list-group-item" data-ng-repeat="item in vm.prescricao.selectedMedicamento">{{item.nome}}</a>
                             </div>
                             <hr>
                             <div class="form-group">
                                 <label for="obs">Observações:</label>
-                                <textarea class="form-control" rows="9" id="obs"></textarea>
+                                <textarea class="form-control" rows="9" id="obs" data-ng-model="vm.prescricao.observacao"></textarea>
                             </div>
-
+                            <button class="btn btn-primary" data-ng-click="vm.criarPrescricao()" data-ng-active="false">Enviar Prescrição</button>
+                            {{vm.prescricao}}
                         </section>
                     </div>
                 </div>

@@ -12,6 +12,7 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -47,6 +48,7 @@ public class Internacao implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "id")
+    @GeneratedValue
     private Integer id;
     @Column(name = "data_intern")
     @Temporal(TemporalType.DATE)
@@ -62,11 +64,9 @@ public class Internacao implements Serializable {
     private String situacao;
     @JoinColumn(name = "cpf", referencedColumnName = "cpf")
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
     private Paciente cpf;
     @JoinColumn(name = "med_responsavel", referencedColumnName = "username")
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
     private User medResponsavel;
     @JoinColumn(name = "id_prescricao", referencedColumnName = "id")
     @OneToOne(fetch = FetchType.LAZY)

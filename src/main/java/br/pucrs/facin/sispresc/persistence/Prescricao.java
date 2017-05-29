@@ -13,6 +13,8 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
@@ -44,9 +46,8 @@ public class Prescricao implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
     @Size(max = 40)
     @Column(name = "situacao")
@@ -63,12 +64,22 @@ public class Prescricao implements Serializable {
     private User medResponsavel;
     @OneToOne(mappedBy = "idPrescricao", fetch = FetchType.LAZY)
     private Internacao internacao;
+    @Column(name = "observacao")
+    private String observacao;
 
     public Prescricao() {
     }
 
     public Prescricao(Integer id) {
         this.id = id;
+    }
+
+    public String getObservacao() {
+        return observacao;
+    }
+
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
     }
 
     public Integer getId() {
@@ -144,5 +155,5 @@ public class Prescricao implements Serializable {
     public String toString() {
         return "br.pucrs.facin.sispresc.persistence.Prescricao[ id=" + id + " ]";
     }
-    
+
 }
