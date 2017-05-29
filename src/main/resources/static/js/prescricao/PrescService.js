@@ -14,6 +14,7 @@
         vm.buscarInfoInternacao = _buscarInfoInternacao;
         vm.buscarListaMedicamentos = _buscarListaMedicamentos;
         vm.criarPrescricao = _criarPrescricao;
+        vm.buscarHistoricoInternacao = _buscarHistoricoInternacao;
 
         function _buscarInfoInternacao(cpf) {
             return $http({
@@ -37,6 +38,13 @@
             });
         }
 
+        function _buscarHistoricoInternacao(cpf) {
+            return $http({
+                method: 'GET',
+                url: '/api/prescricao/historicoPaciente/' + cpf
+            });
+        }
+        
         return vm;
     }
 

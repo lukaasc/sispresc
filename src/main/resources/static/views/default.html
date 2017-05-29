@@ -24,7 +24,7 @@
                     <a href="index.html"><i class="fa fa-fw fa-plus"></i> Nova Prescrição </a>
                 </li>
                 <li>
-                    <a href="charts.html"><i class="fa fa-fw fa-history"></i> Histórico </a>
+                    <a href="/#!historico"><i class="fa fa-fw fa-history"></i> Histórico </a>
                 </li>
             </ul>
         </div>
@@ -51,7 +51,8 @@
                     </div>
 
                     <div class="panel-body">
-
+                        <span us-spinner spinner-key="spinner-1"></span>
+                        
                         <form class="form-search" data-ng-submit="vm.buscarInfoInternacao()">
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="Buscar CPF" data-ng-model="vm.prescricao.cpf" required>
@@ -87,7 +88,6 @@
                                 <textarea class="form-control" rows="9" id="obs" data-ng-model="vm.prescricao.observacao"></textarea>
                             </div>
                             <button class="btn btn-primary" data-ng-click="vm.criarPrescricao()" data-ng-active="false">Enviar Prescrição</button>
-                            {{vm.prescricao}}
                         </section>
                     </div>
                 </div>
@@ -142,3 +142,4 @@
         <!-- /.container-fluid -->
 
     </div>
+</div>

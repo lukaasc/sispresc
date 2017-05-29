@@ -9,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -25,7 +25,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -55,7 +54,10 @@ public class Prescricao implements Serializable {
     @Column(name = "data_criacao")
     @Temporal(TemporalType.DATE)
     private Date dataCriacao;
-    @ManyToMany(mappedBy = "prescricaoList", fetch = FetchType.LAZY)
+    @JoinTable(name = "medicamento_prescricao", joinColumns = {
+        @JoinColumn(name = "id_prescricao", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "id_medicamento", referencedColumnName = "id")})
+    @ManyToMany(fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Medicamento> medicamentoList;
     @JoinColumn(name = "med_responsavel", referencedColumnName = "username")
@@ -63,7 +65,7 @@ public class Prescricao implements Serializable {
     @JsonIgnore
     private User medResponsavel;
     @OneToOne(mappedBy = "idPrescricao", fetch = FetchType.LAZY)
-    private Internacao internacao;
+    private transient Internacao internacao;
     @Column(name = "observacao")
     private String observacao;
 

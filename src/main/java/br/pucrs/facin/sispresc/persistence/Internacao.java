@@ -5,7 +5,10 @@
  */
 package br.pucrs.facin.sispresc.persistence;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -64,9 +67,11 @@ public class Internacao implements Serializable {
     private String situacao;
     @JoinColumn(name = "cpf", referencedColumnName = "cpf")
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private Paciente cpf;
     @JoinColumn(name = "med_responsavel", referencedColumnName = "username")
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private User medResponsavel;
     @JoinColumn(name = "id_prescricao", referencedColumnName = "id")
     @OneToOne(fetch = FetchType.LAZY)

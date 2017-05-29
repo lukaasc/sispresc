@@ -4,10 +4,13 @@ import br.pucrs.facin.sispresc.dao.InternacaoRepository;
 import br.pucrs.facin.sispresc.dao.PacienteRepository;
 import br.pucrs.facin.sispresc.dao.PrescricaoRepository;
 import br.pucrs.facin.sispresc.dto.NovaPrescDTO;
+import br.pucrs.facin.sispresc.dto.PrescricaoDTO;
 import br.pucrs.facin.sispresc.persistence.Internacao;
 import br.pucrs.facin.sispresc.persistence.Paciente;
 import br.pucrs.facin.sispresc.persistence.Prescricao;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.apache.log4j.Logger;
@@ -30,7 +33,7 @@ public class PrescricaoService {
     private InternacaoRepository internacaoRepository;
     @Autowired
     private PrescricaoRepository prescricaoRepository;
-    
+
     @PersistenceContext
     private EntityManager em;
 
@@ -42,28 +45,60 @@ public class PrescricaoService {
                 throw new RuntimeException("Paciente sem internações em aberto!");
             }
 
-            Internacao internacao = paciente.getInternacaoList().stream() // Convert to steam
-                    .filter(x -> "aberta".equalsIgnoreCase(x.getSituacao())) // we want "jack" only
-                    .findAny() // If 'findAny' then return found
+            Internacao internacao = paciente.getInternacaoList().stream()
+                    .filter(x -> "aberta".equalsIgnoreCase(x.getSituacao()))
+                    .findAny()
                     .orElse(null);
-            
+
             Prescricao presc = new Prescricao();
-            
+
             presc.setDataCriacao(new Date());
             presc.setInternacao(internacao);
             presc.setMedResponsavel(internacao.getMedResponsavel());
             presc.setMedicamentoList(prescDTO.getSelectedMedicamento());
             presc.setObservacao(prescDTO.getObservacao());
             presc.setSituacao("Ativa");
-            
+
             em.persist(presc);
             internacao.setIdPrescricao(presc);
             internacaoRepository.save(internacao);
-         
+
             return true;
         } catch (RuntimeException e) {
             logger.error("Paciente sem internações em aberto! ", e);
             return false;
+        }
+    }
+
+    public List<PrescricaoDTO> getHistorico(String cpf) {
+        try {
+            logger.debug("Recuperando historico de prescrições");
+
+            Paciente paciente = pacienteRepository.findOne(cpf);
+            if ("".equals(paciente.getCpf()) || paciente.getInternacaoList().isEmpty()) {
+                throw new RuntimeException("Paciente sem internações!");
+            }
+
+            List<PrescricaoDTO> response = new ArrayList();
+            PrescricaoDTO presc = new PrescricaoDTO();;
+
+            paciente.getInternacaoList().forEach(internacao -> {
+                if (internacao.getIdPrescricao() != null) {
+                    presc.setDataCriacao(internacao.getIdPrescricao().getDataCriacao());
+                    presc.setId(internacao.getIdPrescricao().getId());
+                    presc.setMedResponsavel(internacao.getIdPrescricao().getMedResponsavel().getName() + " " + internacao.getIdPrescricao().getMedResponsavel().getLastname());
+                    presc.setMedicamentoList(internacao.getIdPrescricao().getMedicamentoList());
+                    presc.setObservacao(internacao.getIdPrescricao().getObservacao());
+                    presc.setSituacao(internacao.getIdPrescricao().getSituacao());
+
+                    response.add(presc);
+                }
+            });
+
+            return response;
+        } catch (Exception e) {
+            logger.error("Não foi possível recuperar a lista de prescrições!", e);
+            return null;
         }
     }
 }

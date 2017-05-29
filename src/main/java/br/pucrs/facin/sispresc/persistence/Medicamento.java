@@ -48,10 +48,7 @@ public class Medicamento implements Serializable {
     @Size(max = 400)
     @Column(name = "nome")
     private String nome;
-    @JoinTable(name = "medicamento_prescricao", joinColumns = {
-        @JoinColumn(name = "id_medicamento", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "id_prescricao", referencedColumnName = "id")})
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "medicamentoList", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Prescricao> prescricaoList;
 

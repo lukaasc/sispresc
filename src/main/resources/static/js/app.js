@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-            .module('myApp', ['ngRoute', 'ngCookies'])
+            .module('myApp', ['ngRoute', 'ngCookies', 'angularSpinner'])
             .config(config)
             .run(run);
 
@@ -13,6 +13,11 @@
                 .when('/', {
                     templateUrl: 'views/default.html',
                     controller: 'PrescController',
+                    controllerAs: 'vm'
+                })
+                .when('/historico', {
+                    templateUrl: 'views/historico.html',
+                    controller: 'HistoricoController',
                     controllerAs: 'vm'
                 })
                 .when('/login', {
