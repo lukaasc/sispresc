@@ -80,10 +80,10 @@ public class PrescricaoService {
             }
 
             List<PrescricaoDTO> response = new ArrayList();
-            PrescricaoDTO presc = new PrescricaoDTO();;
 
             paciente.getInternacaoList().forEach(internacao -> {
                 if (internacao.getIdPrescricao() != null) {
+                    PrescricaoDTO presc = new PrescricaoDTO();
                     presc.setDataCriacao(internacao.getIdPrescricao().getDataCriacao());
                     presc.setId(internacao.getIdPrescricao().getId());
                     presc.setMedResponsavel(internacao.getIdPrescricao().getMedResponsavel().getName() + " " + internacao.getIdPrescricao().getMedResponsavel().getLastname());
