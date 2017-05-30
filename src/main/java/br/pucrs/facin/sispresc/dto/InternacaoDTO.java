@@ -19,7 +19,7 @@ public class InternacaoDTO {
     private int setor;
     private int leito;
     private int posto;
-    private String status;
+    private String status = "";
 
     public String getNome() {
         return nome;

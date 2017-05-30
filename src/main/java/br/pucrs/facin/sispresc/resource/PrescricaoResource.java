@@ -38,7 +38,7 @@ public class PrescricaoResource {
     @RequestMapping(value = "/historicoPaciente/{cpf}", method = RequestMethod.GET)
     public ResponseEntity getHistorico(@PathVariable("cpf") String cpf) {
         List<PrescricaoDTO> response = prescricaoService.getHistorico(cpf);
-        if (response == null) {
+        if (response == null || response.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
         

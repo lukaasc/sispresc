@@ -23,7 +23,7 @@ public class InternacaoResource {
     @RequestMapping(value = "/{cpf}", method = RequestMethod.GET)
     public ResponseEntity getInfo(@PathVariable("cpf") String cpf) {
         InternacaoDTO internacaoDTO = internacaoService.getInfo(cpf);
-        if ("".equals(internacaoDTO.getCpf())) {
+        if ("".equals(internacaoDTO.getCpf()) || "".equals(internacaoDTO.getStatus())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
         return ResponseEntity.ok(internacaoDTO);
