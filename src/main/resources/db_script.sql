@@ -37,15 +37,16 @@ create table medicamento(
   );
 create table prescricao(
   id int primary key AUTO_INCREMENT,
+  id_internacao int,
   med_responsavel varchar(40),
   situacao varchar(40),
   data_criacao date,
   observacao varchar(4000),
-  foreign key(med_responsavel) references user(username)  
+  foreign key(med_responsavel) references user(username),
+  foreign key(id_internacao) references prescricao(id)
 );
 create table internacao(
   id int primary key AUTO_INCREMENT,
-  id_prescricao int unique,
   cpf varchar(15),
   data_intern date,
   leito int,
@@ -54,14 +55,14 @@ create table internacao(
   med_responsavel varchar(40),
   situacao varchar(40),
   foreign key(cpf) references paciente(cpf),
-  foreign key(med_responsavel) references user(username),
-  foreign key(id_prescricao) references prescricao(id)
+  foreign key(med_responsavel) references user(username)
 );
 create table medicamento_prescricao(
   id_medicamento int,
   id_prescricao int,
   foreign key (id_medicamento) references medicamento(id),
-  foreign key (id_prescricao) references prescricao(id)
+  foreign key (id_prescricao) references prescricao(id),
+  primary key(id_medicamento, id_prescricao)
 );
 
 insert into  user (username, password, role, name, lastname) values ('mmachado', 'machado99', 'medico', 'Marcelo', 'Machado');
