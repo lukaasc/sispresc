@@ -43,7 +43,7 @@ create table prescricao(
   data_criacao date,
   observacao varchar(4000),
   foreign key(med_responsavel) references user(username),
-  foreign key(id_internacao) references prescricao(id)
+  foreign key(id_internacao) references internacao(id)
 );
 create table internacao(
   id int primary key AUTO_INCREMENT,

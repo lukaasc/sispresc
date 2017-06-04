@@ -44,3 +44,7 @@ body{
 .selected-medicamento{
     margin-top: 20px;    
 }
+
+#page-wrapper{
+    padding: 50px;
+}

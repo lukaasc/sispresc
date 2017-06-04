@@ -1,145 +1,100 @@
-<div id="wrapper">
-
-    <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <a class="navbar-brand">SPM - Prescrição</a>
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">
+            Nova Prescrição
+        </h1>
+    </div>
+</div>
+<!-- /.row -->
+<div class="col-lg-8">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-plus fa-fw"></i> Criar Nova</h3>
         </div>
-        <!-- Top Menu Items -->
-        <ul class="nav navbar-right top-nav">
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user-md"></i> Dr. Élton Nogueira <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                    <li>
-                        <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-        <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
-            <ul class="nav navbar-nav side-nav">
-                <li class="active">
-                    <a href="index.html"><i class="fa fa-fw fa-plus"></i> Nova Prescrição </a>
-                </li>
-                <li>
-                    <a href="/#!historico"><i class="fa fa-fw fa-history"></i> Histórico </a>
-                </li>
-            </ul>
+
+        <div class="panel-body">
+            <span us-spinner spinner-key="spinner-1"></span>
+
+            <form class="form-search" data-ng-submit="vm.buscarInfoInternacao()">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Buscar CPF" data-ng-model="vm.prescricao.cpf" required>
+                    <span class="input-group-btn">
+                        <button class="btn btn-secondary" type="submit"><i class="fa fa-search"></i></button>
+                    </span>
+                </div>                            
+            </form>
+
+            <section class="medicamentos" data-ng-show="vm.infoInternacao">
+                <hr>
+                <label>Selecionar Medicamentos</label>
+                <select class="selectpicker" multiple data-ng-model="vm.prescricao.selectedMedicamento" data-ng-options="item.nome for item in vm.medicamentosList| orderBy: 'nome'" data-live-search="true">
+
+                </select>
+                <script>
+                                    $('.selectpicker').selectpicker({
+                                        style: null,
+                                        size: 'auto',
+                                        title: 'Escolher medicamento',
+                                        width: '100%'
+                                    });
+
+                </script>
+                <hr>
+                <div class="list-group selected-medicamento" data-ng-if="!!vm.prescricao.selectedMedicamento">
+                    <label>Medicamentos Selecionados</label>
+                    <a class="list-group-item" data-ng-repeat="item in vm.prescricao.selectedMedicamento">{{item.nome}}</a>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <label for="obs">Observações:</label>
+                    <textarea class="form-control" rows="9" id="obs" data-ng-model="vm.prescricao.observacao"></textarea>
+                </div>
+                <button class="btn btn-primary" data-ng-click="vm.criarPrescricao()" data-ng-active="false">Enviar Prescrição</button>
+            </section>
         </div>
-        <!-- /.navbar-collapse -->
-    </nav>
+    </div>
+</div>
 
-    <div id="page-wrapper">
-
-        <div class="container-fluid">
-
-            <!-- Page Heading -->
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">
-                        Nova Prescrição
-                    </h1>
-                </div>
-            </div>
-            <!-- /.row -->
-            <div class="col-lg-8">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title"><i class="fa fa-plus fa-fw"></i> Criar Nova</h3>
-                    </div>
-
-                    <div class="panel-body">
-                        <span us-spinner spinner-key="spinner-1"></span>
-                        
-                        <form class="form-search" data-ng-submit="vm.buscarInfoInternacao()">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Buscar CPF" data-ng-model="vm.prescricao.cpf" required>
-                                <span class="input-group-btn">
-                                    <button class="btn btn-secondary" type="submit"><i class="fa fa-search"></i></button>
-                                </span>
-                            </div>                            
-                        </form>
-
-                        <section class="medicamentos" data-ng-show="vm.infoInternacao">
-                            <hr>
-                            <label>Selecionar Medicamentos</label>
-                            <select class="selectpicker" multiple data-ng-model="vm.prescricao.selectedMedicamento" data-ng-options="item.nome for item in vm.medicamentosList| orderBy: 'nome'" data-live-search="true">
-
-                            </select>
-                            <script>
-                                                $('.selectpicker').selectpicker({
-                                                    style: null,
-                                                    size: 'auto',
-                                                    title: 'Escolher medicamento',
-                                                    width: '100%'
-                                                });
-
-                            </script>
-                            <hr>
-                            <div class="list-group selected-medicamento">
-                                <label>Medicamentos Selecionados</label>
-                                <a class="list-group-item" data-ng-repeat="item in vm.prescricao.selectedMedicamento">{{item.nome}}</a>
-                            </div>
-                            <hr>
-                            <div class="form-group">
-                                <label for="obs">Observações:</label>
-                                <textarea class="form-control" rows="9" id="obs" data-ng-model="vm.prescricao.observacao"></textarea>
-                            </div>
-                            <button class="btn btn-primary" data-ng-click="vm.criarPrescricao()" data-ng-active="false">Enviar Prescrição</button>
-                        </section>
-                    </div>
-                </div>
+<div class="col-lg-4 pull-right" data-ng-if="vm.infoInternacao">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-info-circle fa-fw"></i> Informações</h3>
+        </div>
+        <div class="panel-body" >
+            <div class="list-group">
+                <label>Paciente</label>
+                <a class="list-group-item">
+                    <i class="fa fa-fw fa-user-o"></i> 
+                    <small>{{vm.infoInternacao.nome + ' ' + vm.infoInternacao.sobrenome}}</small>
+                </a>
+                <a class="list-group-item">
+                    <i class="fa fa-fw fa-birthday-cake"></i>
+                    <small>{{vm.infoInternacao.data_nasc}}</small>
+                </a>
+                <a class="list-group-item">
+                    <i class="fa fa-fw fa-venus-mars"></i>
+                    <small>{{vm.infoInternacao.sexo}}</small>
+                </a>
             </div>
 
-            <div class="col-lg-4 pull-right" data-ng-if="vm.infoInternacao">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title"><i class="fa fa-info-circle fa-fw"></i> Informações</h3>
-                    </div>
-                    <div class="panel-body" >
-                        <div class="list-group">
-                            <label>Paciente</label>
-                            <a class="list-group-item">
-                                <i class="fa fa-fw fa-user-o"></i> 
-                                <small>{{vm.infoInternacao.nome + ' ' + vm.infoInternacao.sobrenome}}</small>
-                            </a>
-                            <a class="list-group-item">
-                                <i class="fa fa-fw fa-birthday-cake"></i>
-                                <small>{{vm.infoInternacao.data_nasc}}</small>
-                            </a>
-                            <a class="list-group-item">
-                                <i class="fa fa-fw fa-venus-mars"></i>
-                                <small>{{vm.infoInternacao.sexo}}</small>
-                            </a>
-                        </div>
-
-                        <div class="list-group">
-                            <label>Internação</label>
-                            <a class="list-group-item">
-                                <small>Data da Internação: {{vm.infoInternacao.data_intern}}</small>
-                            </a>
-                            <a class="list-group-item">
-                                <small>Setor: {{vm.infoInternacao.setor}}</small>
-                            </a>
-                            <a class="list-group-item">
-                                <small>Leito: {{vm.infoInternacao.leito}}</small>
-                            </a>
-                            <a class="list-group-item">
-                                <small>Posto: {{vm.infoInternacao.posto}}</small>
-                            </a>
-                            <a class="list-group-item">
-                                <small>Status: {{vm.infoInternacao.status}}</small>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+            <div class="list-group">
+                <label>Internação</label>
+                <a class="list-group-item">
+                    <small>Data da Internação: {{vm.infoInternacao.data_intern}}</small>
+                </a>
+                <a class="list-group-item">
+                    <small>Setor: {{vm.infoInternacao.setor}}</small>
+                </a>
+                <a class="list-group-item">
+                    <small>Leito: {{vm.infoInternacao.leito}}</small>
+                </a>
+                <a class="list-group-item">
+                    <small>Posto: {{vm.infoInternacao.posto}}</small>
+                </a>
+                <a class="list-group-item">
+                    <small>Status: {{vm.infoInternacao.status}}</small>
+                </a>
             </div>
-            <!-- /.row -->
-
         </div>
-        <!-- /.container-fluid -->
-
     </div>
 </div>

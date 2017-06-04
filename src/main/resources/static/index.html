@@ -1,33 +1,74 @@
 <!DOCTYPE html>
 <head>
+    <meta charset="utf-8">
     <title>Sispresc</title>
 </head>
 <body ng-app="myApp">
-<link rel="stylesheet" type="text/css" href="css/lib/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="css/lib/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="css/lib/sb-admin.css">
-<link rel="stylesheet" type="text/css" href="css/lib/sweetalert.css">
-<link rel="stylesheet" type="text/css" href="css/lib/bootstrap-select.min.css">
-<link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/lib/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/lib/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/lib/sb-admin.css">
+    <link rel="stylesheet" type="text/css" href="css/lib/sweetalert.css">
+    <link rel="stylesheet" type="text/css" href="css/lib/bootstrap-select.min.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
 
-<div ng-view></div>
+    <div id="wrapper">
 
-<!-- jQuery -->
-<script src="js/lib/jquery.min.js"></script>
-<!-- Bootstrap Core JavaScript -->
-<script src="js/lib/bootstrap.min.js"></script>
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <a class="navbar-brand">SPM - Prescrição</a>
+            </div>
+            <!-- Top Menu Items -->
+            <ul class="nav navbar-right top-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user-md"></i> Dr. Élton Nogueira <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a data-ng-click="logout()"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse" data-ng-if="currentUser">
+                <ul class="nav navbar-nav side-nav">
+                    <li>
+                        <a href="/#!default"><i class="fa fa-fw fa-plus"></i> Nova Prescrição </a>
+                    </li>
+                    <li>
+                        <a href="/#!historico"><i class="fa fa-fw fa-history"></i> Histórico </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
 
-<script src="js/lib/angular.min.js"></script>
-<script src="js/lib/angular-route.min.js"></script>
-<script src="js/lib/angular-cookies.min.js"></script>
-<script src="js/lib/angular-spinner.min.js"></script>
-<script src="js/lib/sweetalert.min.js"></script>
-<script src="js/lib/bootstrap-select.min.js"></script>
+        <div id="page-wrapper">
 
-<script src="js/app.js"></script>
-<script src="js/prescricao/PrescService.js"></script>
-<script src="js/login/LoginController.js"></script>
-<script src="js/prescricao/PrescController.js"></script>
-<script src="js/historico/HistoricoController.js"></script>
+            <div class="container-fluid">
+                <div ng-view></div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="js/lib/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/lib/bootstrap.min.js"></script>
+
+    <script src="js/lib/angular.min.js"></script>
+    <script src="js/lib/angular-route.min.js"></script>
+    <script src="js/lib/angular-cookies.min.js"></script>
+    <script src="js/lib/angular-spinner.min.js"></script>
+    <script src="js/lib/sweetalert.min.js"></script>
+    <script src="js/lib/bootstrap-select.min.js"></script>
+
+    <script src="js/app.js"></script>
+    <script src="js/prescricao/PrescService.js"></script>
+    <script src="js/login/LoginController.js"></script>
+    <script src="js/prescricao/PrescController.js"></script>
+    <script src="js/historico/HistoricoController.js"></script>
 </body>
 </html>

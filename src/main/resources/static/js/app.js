@@ -28,8 +28,8 @@
                 .otherwise({redirectTo: '/'});
     }
 
-    run.$inject = ['$rootScope', '$location', '$cookies', '$http'];
-    function run($rootScope, $location, $cookies, $http) {
+    run.$inject = ['$rootScope', '$location', '$cookies'];
+    function run($rootScope, $location, $cookies) {
         // keep user logged in after page refresh
         $rootScope.currentUser = $cookies.get('currentUser');
 
@@ -42,6 +42,12 @@
                 $location.path('/login');
             }
         });
+
+        $rootScope.logout = function () {
+            $rootScope.currentUser = null;
+            $cookies.remove('currentUser');
+            $location.path('/login');
+        };
     }
 
 })();
