@@ -57,7 +57,7 @@ public class PrescricaoService {
             presc.setMedResponsavel(internacao.getMedResponsavel());
             presc.setMedicamentoList(prescDTO.getSelectedMedicamento());
             presc.setObservacao(prescDTO.getObservacao());
-            presc.setSituacao("Ativa");
+            presc.setSituacao("Enviada");
 
             em.persist(presc);
             internacao.setIdPrescricao(presc);

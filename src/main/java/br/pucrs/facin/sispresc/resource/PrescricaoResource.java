@@ -41,7 +41,16 @@ public class PrescricaoResource {
         if (response == null || response.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
-        
+
+        return ResponseEntity.ok(response);
+    }
+
+    public ResponseEntity getAll() {
+        List<PrescricaoDTO> response = prescricaoService.getHistorico(cpf);
+        if (response == null || response.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+
         return ResponseEntity.ok(response);
     }
 }

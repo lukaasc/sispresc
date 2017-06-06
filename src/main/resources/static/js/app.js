@@ -20,6 +20,11 @@
                     controller: 'HistoricoController',
                     controllerAs: 'vm'
                 })
+                .when('/farmacia', {
+                    templateUrl: 'views/farmacia.html',
+                    controller: 'FarmaciaController',
+                    controllerAs: 'vm'
+                })
                 .when('/login', {
                     templateUrl: 'views/login.html',
                     controller: 'LoginController',
