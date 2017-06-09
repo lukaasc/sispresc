@@ -10,8 +10,10 @@
 
     function FarmaciaService($location, $rootScope, $http) {
         var vm = this;
+        
+        vm.buscarListaPrescricao = _buscarListaPrescricao;
 
-        function buscarListaPrescricao(cpf) {
+        function _buscarListaPrescricao() {
             return $http({
                 method: 'GET',
                 url: '/api/prescricao/enviadasFarmacia'

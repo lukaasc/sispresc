@@ -14,15 +14,23 @@
 
         <div class="panel-body">
             <span us-spinner spinner-key="spinner-1"></span>
-
-            <div>
-                <ul class="list-unstyled">
-                    <li data-ng-repeat="presc in vm.prescList">{{presc.nome}}<hr> </li>
-                    <li>blabla<hr> </li>
-                    <li>blabla<hr> </li>
-                </ul>
+            <div class="list-group">
+                <div class="list-group-item" style="height: 100%" data-ng-repeat="presc in vm.prescList">
+                    <small>{{presc.dataCriacao}}</small>
+                    <button class="btn btn-link">Despachar</button>
+                    <small class="pull-right">Dr(a). {{presc.medResponsavel}}</small>
+                    <hr>
+                    <label>Medicamentos</label>
+                    <ul class="list-unstyled">
+                        <li data-ng-repeat="med in presc.medicamentoList">
+                            <a class="col-sm-10">{{med.nome}} -</a>
+                            <button class="btn btn-link col-sm-2" href="" data-ng-click="vm.addListaCompras(med.id)">Comprar</button>
+                            <br>
+                        </li>
+                    </ul>
+                </div>
             </div>
-
+            {{vm.medCompras}}
 
         </div>
     </div>

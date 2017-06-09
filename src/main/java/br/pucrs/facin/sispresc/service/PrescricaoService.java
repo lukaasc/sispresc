@@ -109,7 +109,7 @@ public class PrescricaoService {
             logger.debug("Recuperando precrições enviadas a farmácia");
 
             List<Prescricao> prescs = (List<Prescricao>) prescricaoRepository.findAll();
-            List<PrescricaoDTO> response = null;
+            List<PrescricaoDTO> response = new ArrayList();
 
             prescs = prescs.stream()
                     .filter(presc -> "enviada".equalsIgnoreCase(presc.getSituacao()))
