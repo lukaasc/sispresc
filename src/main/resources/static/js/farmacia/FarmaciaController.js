@@ -5,24 +5,24 @@
             .module('myApp')
             .controller('FarmaciaController', FarmaciaController);
 
-    FarmaciaController.$inject = ['$timeout', 'usSpinnerService'];
+    FarmaciaController.$inject = ['$timeout', 'usSpinnerService', 'FarmaciaService'];
 
-    function FarmaciaController($timeout, usSpinnerService) {
+    function FarmaciaController($timeout, usSpinnerService, FarmaciaService) {
         var vm = this;
         
-        vm.cpf = '';
+        vm.FarmaciaService = FarmaciaService;
 
-        _buscarListaPrescricao();
+        $timeout(_buscarListaPrescricao(), 1000);
 
         function _buscarListaPrescricao() {
-            vm.startSpin();
+            //vm.startSpin();
             
             vm.FarmaciaService.buscarListaPrescricao().then(function successCallback(response) {
                 console.log(response.data);
-                vm.stopSpin();
+                //vm.stopSpin();
             }, function errorCallback(response) {
                 swal("Oops...", "Não foi possível recuperar lista de prescrições!", "error");
-                vm.stopSpin();
+                //vm.stopSpin();
             });
         }
 

@@ -11,20 +11,20 @@
     function FarmaciaService($location, $rootScope, $http) {
         var vm = this;
 
-        function _buscarListaPrescricao(cpf) {
+        function buscarListaPrescricao(cpf) {
             return $http({
                 method: 'GET',
-                url: '/api/prescricao/'
+                url: '/api/prescricao/enviadasFarmacia'
             });
         }
 
-        function _criarPrescricao(presc) {
-            return $http({
-                method: 'POST',
-                url: '/api/prescricao/criar',
-                data: presc
-            });
-        }
+        // function _criarPrescricao(presc) {
+        //     return $http({
+        //         method: 'POST',
+        //         url: '/api/prescricao/criar',
+        //         data: presc
+        //     });
+        // }
         
         return vm;
     }

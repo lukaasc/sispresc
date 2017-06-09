@@ -8,15 +8,17 @@ import br.pucrs.facin.sispresc.dto.PrescricaoDTO;
 import br.pucrs.facin.sispresc.persistence.Internacao;
 import br.pucrs.facin.sispresc.persistence.Paciente;
 import br.pucrs.facin.sispresc.persistence.Prescricao;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by lucas on 21/05/2017.
@@ -93,6 +95,35 @@ public class PrescricaoService {
 
                     response.add(presc);
                 }
+            });
+
+            return response;
+        } catch (Exception e) {
+            logger.error("Não foi possível recuperar a lista de prescrições!", e);
+            return null;
+        }
+    }
+
+    public List<PrescricaoDTO> getEnviadasFarmacia() {
+        try {
+            logger.debug("Recuperando precrições enviadas a farmácia");
+
+            List<Prescricao> prescs = (List<Prescricao>) prescricaoRepository.findAll();
+            List<PrescricaoDTO> response = null;
+
+            prescs = prescs.stream()
+                    .filter(presc -> "enviada".equalsIgnoreCase(presc.getSituacao()))
+                    .collect(Collectors.toList());
+
+            prescs.forEach(p -> {
+                PrescricaoDTO x = new PrescricaoDTO();
+                x.setDataCriacao(p.getDataCriacao());
+                x.setId(p.getId());
+                x.setMedicamentoList(p.getMedicamentoList());
+                x.setMedResponsavel(p.getMedResponsavel().getName() + " " + p.getMedResponsavel().getLastname());
+                x.setObservacao(p.getObservacao());
+                x.setSituacao(p.getSituacao());
+                response.add(x);
             });
 
             return response;
