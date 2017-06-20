@@ -12,15 +12,30 @@
 
         vm.FarmaciaService = FarmaciaService;
         vm.addListaCompras = _addListaCompras;
+        vm.enviarCompras = _enviarCompras;
+        vm.buscarListaPrescricao = _buscarListaPrescricao;
+        vm.despacharPresc = _despacharPresc;
         vm.prescList = [];
 
         vm.medCompras = [];
         
-        function _enviarCompras(){
-            //TODO
+        function startSpin() {
+            usSpinnerService.spin('spinner-1');
+        }
+        function stopSpin() {
+            usSpinnerService.stop('spinner-1');
         }
         
-        function _despacharPresc(){
+        function _enviarCompras(listaCompras) {
+            startSpin();
+            $timeout(function () {
+                stopSpin();
+                swal("Nice!", "Lista de medicamentos enviada para o setor de compras!", "success");
+            }, 2000)
+        }
+
+        function _despacharPresc(presc) {
+            alert(presc.medResponsavel);
             //TODO
         }
 
@@ -41,7 +56,7 @@
 
         function _buscarListaPrescricao() {
             vm.prescList = [];
-
+            startSpin();
             vm.FarmaciaService.buscarListaPrescricao().then(function successCallback(response) {
                 vm.prescList = response.data;
                 console.log(response.data);
@@ -51,15 +66,5 @@
                 stopSpin();
             });
         }
-
-        function startSpin() {
-            usSpinnerService.spin('spinner-1');
-        }
-        function stopSpin() {
-            usSpinnerService.stop('spinner-1');
-        }
-
-        _buscarListaPrescricao();
-
     }
 })();
