@@ -132,4 +132,19 @@ public class PrescricaoService {
             return null;
         }
     }
+
+    public boolean despacharPrescricao(PrescricaoDTO presc) {
+        try {
+            logger.debug("Despachando prescrições enviadas pela farmácia!");
+            Prescricao p = prescricaoRepository.findOne(presc.getId());
+            p.setSituacao("Fechada");
+            prescricaoRepository.save(p);
+            return true;
+        } catch(Exception e){
+            logger.error("Não foi possível despachar prescrição!", e);
+            return false;
+        }
+
+    }
+;
 }

@@ -28,14 +28,12 @@
                         <li data-ng-repeat="med in presc.medicamentoList">
                             <small class="col-sm-11">{{med.nome}}</small>
                             <!--<button class="btn btn-link col-sm-2" data-ng-click="vm.addListaCompras(med.id)">Comprar</button>-->
-                            <small class="btn btn-sm col-sm-1" style="font-weight: bold; text-align: center;" data-ng-click="vm.medCompras.indexOf(med.id) >= 0 || vm.addListaCompras(med.id)" ng-disabled="vm.medCompras.indexOf(med.id) >= 0">Comprar</small>
+                            <small class="btn btn-sm col-sm-1" style="font-weight: bold; text-align: center;" data-ng-click="vm.medCompras.indexOf(med.id) >= 0 || vm.addListaCompras(med.id) || vm.compraEnviada" ng-disabled="vm.medCompras.indexOf(med.id) >= 0">Comprar</small>
                             <br>
                         </li>
                     </ul>
                 </div>
             </div>
-            {{vm.medCompras}}
-
         </div>
     </div>
 </div>

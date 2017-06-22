@@ -18,6 +18,7 @@
         vm.prescList = [];
 
         vm.medCompras = [];
+        vm.compraEnviada = false;
         
         function startSpin() {
             usSpinnerService.spin('spinner-1');
@@ -28,6 +29,8 @@
         
         function _enviarCompras(listaCompras) {
             startSpin();
+            vm.medCompras = [];
+            vm.compraEnviada = true;
             $timeout(function () {
                 stopSpin();
                 swal("Nice!", "Lista de medicamentos enviada para o setor de compras!", "success");
@@ -35,8 +38,17 @@
         }
 
         function _despacharPresc(presc) {
-            alert(presc.medResponsavel);
-            //TODO
+          startSpin();
+            vm.FarmaciaService.despacharPrescricao(presc).then(function successCallback(response) {
+                var idx = vm.prescList.indexOf(presc);
+                vm.prescList.splice(idx, 1);
+
+                swal("Nice!", "Prescrição despachada!", "success");
+                stopSpin();
+            }, function errorCallback(response) {
+                swal("Oops...", "Não foi possível despachar prescrição!", "error");
+                stopSpin();
+            });
         }
 
         function _addListaCompras(idMedicamento) {
@@ -58,8 +70,10 @@
             vm.prescList = [];
             startSpin();
             vm.FarmaciaService.buscarListaPrescricao().then(function successCallback(response) {
+                if(response.status === 200 && response.data.length === 0){
+                    swal("Farmácia sem prescrições em espera!");
+                }
                 vm.prescList = response.data;
-                console.log(response.data);
                 stopSpin();
             }, function errorCallback(response) {
                 swal("Oops...", "Não foi possível recuperar lista de prescrições!", "error");

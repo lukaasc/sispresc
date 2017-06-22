@@ -45,11 +45,21 @@ public class PrescricaoResource {
     @RequestMapping(value = "/enviadasFarmacia", method = RequestMethod.GET)
     public ResponseEntity getEnviadasFarmacia() {
         List<PrescricaoDTO> response = prescricaoService.getEnviadasFarmacia();
-
-        if (response == null || response.isEmpty()) {
+        if (response == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        } else if (response.isEmpty()) {
+            return ResponseEntity.ok(response);
         }
 
         return ResponseEntity.ok(response);
+    }
+
+    @RequestMapping(value = "/despachar", method = RequestMethod.POST)
+    public ResponseEntity despacharPrescricao(@RequestBody PrescricaoDTO presc) {
+        boolean response = prescricaoService.despacharPrescricao(presc);
+        if (!response) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(null);
     }
 }

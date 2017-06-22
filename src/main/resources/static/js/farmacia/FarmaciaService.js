@@ -12,6 +12,7 @@
         var vm = this;
         
         vm.buscarListaPrescricao = _buscarListaPrescricao;
+        vm.despacharPrescricao = _despacharPrescricao;
 
         function _buscarListaPrescricao() {
             return $http({
@@ -20,13 +21,13 @@
             });
         }
 
-        // function _criarPrescricao(presc) {
-        //     return $http({
-        //         method: 'POST',
-        //         url: '/api/prescricao/criar',
-        //         data: presc
-        //     });
-        // }
+        function _despacharPrescricao(presc) {
+            return $http({
+                method: 'POST',
+                url: '/api/prescricao/despachar',
+                data: presc
+            });
+        }
         
         return vm;
     }
