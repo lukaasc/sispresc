@@ -30,10 +30,15 @@
                 }
                 var expireDate = new Date();
                 expireDate.setDate(expireDate.getDate() + 1);
-                $cookies.put('currentUser', loggedUser, {
+                $cookies.putObject('currentUser', loggedUser, {
                     'expires': expireDate
                 });
-                $location.path('/');
+
+                if(loggedUser.role === 'medico'){
+                 $location.path('/');   
+                }else{
+                    $location.path('/farmacia');
+                }
                 vm.stopSpin();
             }, function errorCallback(response) {
                 swal("Oops...", "User not authorized!", "error");

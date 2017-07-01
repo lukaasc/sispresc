@@ -53,6 +53,12 @@
             $cookies.remove('currentUser');
             $location.path('/login');
         };
+
+        $rootScope.getUser = function () {
+            var user = $cookies.getObject('currentUser');
+            return user;
+        };
+
     }
 
 })();
