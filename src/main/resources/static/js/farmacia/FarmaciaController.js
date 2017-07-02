@@ -19,6 +19,7 @@
 
         vm.medCompras = [];
         vm.compraEnviada = false;
+        vm.loading = true;
         
         function startSpin() {
             usSpinnerService.spin('spinner-1');
@@ -67,17 +68,18 @@
         }
 
         function _buscarListaPrescricao() {
+            vm.loading = true;
             vm.prescList = [];
-            startSpin();
+
             vm.FarmaciaService.buscarListaPrescricao().then(function successCallback(response) {
                 if(response.status === 200 && response.data.length === 0){
                     swal("Farmácia sem prescrições em espera!");
                 }
                 vm.prescList = response.data;
-                stopSpin();
+                vm.loading = false;
             }, function errorCallback(response) {
                 swal("Oops...", "Não foi possível recuperar lista de prescrições!", "error");
-                stopSpin();
+                vm.loading = false;
             });
         }
     }

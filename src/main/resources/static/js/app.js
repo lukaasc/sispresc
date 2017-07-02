@@ -61,6 +61,14 @@
 
         $rootScope.getUser = function () {
             var user = $cookies.getObject('currentUser');
+            if(user.role === 'medico'){
+                user.name = 'Dr(a). ' + user.name + ' ' + user.lastname;
+            }else if(user.role === 'farmaceutico'){
+                user.name = 'Farm(a). ' + user.name + ' ' + user.lastname;
+            }else{
+                user.name = user.name + ' ' + user.lastname;
+            }
+            
             return user;
         };
 

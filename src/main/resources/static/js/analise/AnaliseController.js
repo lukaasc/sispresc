@@ -9,21 +9,11 @@
 
     function AnaliseController($timeout, $scope, usSpinnerService, PrescService) {
         var vm = this;
-
-        this.medicamentos = null;
-        this.labels = [];
-        this.data = [];
-
-        this.startSpin = function () {
-            usSpinnerService.spin('spinner-1');
-        };
-
-        this.stopSpin = function () {
-            usSpinnerService.stop('spinner-1');
-        };
+        
+        this.loading = true;
 
         this.plotChart = function () {
-            this.startSpin();
+            this.loading = true;
             PrescService.getRankingMedicamentos().then(function successCallback(response) {
                 
                 var labels = [];
@@ -73,10 +63,10 @@
                     }
                 });
                 
-                vm.stopSpin();
+                vm.loading = false
             }, function errorCallback(response) {
                 swal("Oops...", "Não foi possível recuperar o ranking de medicamentos enviados!", "error");
-                vm.stopSpin();
+                vm.loading = false
             });
         };
     }
