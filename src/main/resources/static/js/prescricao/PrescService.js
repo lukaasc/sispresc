@@ -15,6 +15,7 @@
         vm.buscarListaMedicamentos = _buscarListaMedicamentos;
         vm.criarPrescricao = _criarPrescricao;
         vm.buscarHistoricoInternacao = _buscarHistoricoInternacao;
+        vm.getRankingMedicamentos = _getRankingMedicamentos;
 
         function _buscarInfoInternacao(cpf) {
             return $http({
@@ -27,6 +28,13 @@
             return $http({
                 method: 'GET',
                 url: '/api/medicamento'
+            });
+        }
+
+        function _getRankingMedicamentos() {
+            return $http({
+                method: 'GET',
+                url: '/api/medicamento/ranking'
             });
         }
 
@@ -44,7 +52,7 @@
                 url: '/api/prescricao/historicoPaciente/' + cpf
             });
         }
-        
+
         return vm;
     }
 

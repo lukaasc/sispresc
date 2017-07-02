@@ -25,6 +25,11 @@
                     controller: 'FarmaciaController',
                     controllerAs: 'vm'
                 })
+                .when('/analise', {
+                    templateUrl: 'views/analise.html',
+                    controller: 'AnaliseController',
+                    controllerAs: 'vm'
+                })
                 .when('/login', {
                     templateUrl: 'views/login.html',
                     controller: 'LoginController',
