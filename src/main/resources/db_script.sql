@@ -35,16 +35,7 @@ create table medicamento(
   id int primary key,
   nome varchar(400)
   );
-create table prescricao(
-  id int primary key AUTO_INCREMENT,
-  id_internacao int,
-  med_responsavel varchar(40),
-  situacao varchar(40),
-  data_criacao date,
-  observacao varchar(4000),
-  foreign key(med_responsavel) references user(username),
-  foreign key(id_internacao) references internacao(id)
-);
+
 create table internacao(
   id int primary key AUTO_INCREMENT,
   cpf varchar(15),
@@ -53,10 +44,23 @@ create table internacao(
   posto int,
   setor int,
   med_responsavel varchar(40),
+  id_prescricao  int,
   situacao varchar(40),
   foreign key(cpf) references paciente(cpf),
+  foreign key(med_responsavel) references user(username),
+  foreign key(id_prescricao) references prescricao(id)
+);
+
+create table prescricao(
+  id int primary key AUTO_INCREMENT,
+  id_internacao int,
+  med_responsavel varchar(40),
+  situacao varchar(40),
+  data_criacao date,
+  observacao varchar(4000),
   foreign key(med_responsavel) references user(username)
 );
+
 create table medicamento_prescricao(
   id_medicamento int,
   id_prescricao int,
@@ -108,7 +112,6 @@ inner join internacao inter on inter.id_prescricao = presc.id
 inner join medicamento_prescricao mp on mp.id_prescricao = presc.id
 inner join medicamento m on m.id = mp.id_medicamento
 inner join paciente pac on pac.cpf = inter.cpf;
-
 
 select * from prescricao;
 select * from internacao;
